@@ -1,4 +1,7 @@
 var React = require('react')
+if (!Object.assign) {
+    Object.assign = require('object-assign')
+}
 
 var Swipeable = React.createClass({displayName: "Swipeable",
   propTypes: {
@@ -125,7 +128,7 @@ var Swipeable = React.createClass({displayName: "Swipeable",
         pos.deltaY,
         isFlick
       )
-      
+
       if (pos.absX > pos.absY) {
         if (pos.deltaX > 0) {
           this.props.onSwipedLeft && this.props.onSwipedLeft(ev, pos.deltaX, isFlick)
@@ -140,18 +143,18 @@ var Swipeable = React.createClass({displayName: "Swipeable",
         }
       }
     }
-    
+
     this.setState(this.getInitialState())
   },
 
   render: function () {
     return (
-      React.createElement("div", React.__spread({},  this.props, 
-        {onTouchStart: this.touchStart, 
-        onTouchMove: this.touchMove, 
-        onTouchEnd: this.touchEnd}), 
+      React.createElement("div", Object.assign({}, this.props,
+        {onTouchStart: this.touchStart,
+        onTouchMove: this.touchMove,
+        onTouchEnd: this.touchEnd}),
           this.props.children
-      )  
+      )
     )
   }
 })
